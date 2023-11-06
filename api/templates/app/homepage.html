@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Django CRUD Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        h1 {
+            margin: 0;
+        }
+        
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 70px);
+        }
+        
+        .button-container {
+            text-align: center;
+        }
+        
+        button {
+            background-color: #0074D9;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .create-button {
+            background-color: #2ECC40;
+        }
+        
+        .read-button {
+            background-color: #FFDC00;
+            color: #333;
+        }
+        
+        .update-button {
+            background-color: #FF851B;
+        }
+        
+        .delete-button {
+            background-color: #FF4136;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Django CRUD</h1><br>
+        <h2>Made by Khalid</h2>
+    </header>
+    <main>
+        <div class="button-container">
+            <button class="create-button"><a href="{% url 'create' %}">Create Student</a></button>
+            <button class="read-button"><a href="{% url 'read' %}"></a>Lookup Student</button>
+            <button class="update-button"><a href="{% url 'update' %}"></a>Update Student</button>
+            <button class="delete-button"><a href="{% url 'delete' %}"></a>Delete Student</button>
+        </div>
+    </main>
+</body>
+</html>

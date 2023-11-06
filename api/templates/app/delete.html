@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Student Data</title>
+    <style>
+        /* Style for the buttons */
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .create-button {
+            background-color: green;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .read-button {
+            background-color: yellow;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .update-button {
+            background-color: blue;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .delete-button {
+            background-color: red;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .home-button {
+            background-color: brown;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Delete Student Data</h1>
+    <label for="studentId">Enter Student ID:</label>
+    <input type="text" id="studentId" />
+    <button id="deleteStudentButton">Delete Student</button>
+    <div id="studentData"></div>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <button class="create-button"><a href="{% url 'create' %}">Create Student</a></button>
+        <button class="read-button"><a href="{% url 'read' %}">Lookup Student</a></button>
+        <button class="update-button"><a href="{% url 'update' %}">Update Student</a></button>
+        <button class="delete-button"><a href="{% url 'delete' %}">Delete Student</a></button>
+    </div>
+    <div style="text-align: center; margin-top: 50px;">
+        <button class="home-button"><a href="{% url 'homepage' %}">visit Home</a></button>
+    </div>
+
+    <script>
+        // Define the URL of your Django API endpoint
+        const apiUrl = 'http://localhost:8080/api/v1/students_data/';
+
+        // Get the elements from the HTML
+        const studentIdInput = document.getElementById('studentId');
+        const deleteStudentButton = document.getElementById('deleteStudentButton');
+        const studentDataDiv = document.getElementById('studentData');
+
+        // Add an event listener to the Delete Student button
+        deleteStudentButton.addEventListener('click', () => {
+            // Get the student ID from the input field
+            const studentId = studentIdInput.value;
+
+            // Create a DELETE request using the Fetch API
+            fetch(apiUrl, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: studentId }),
+            })
+            .then((response) => {
+                if (response.ok) {
+                    // The DELETE request was successful
+                    return response.json();
+                } else {
+                    // Handle the error case
+                    throw an Error('Failed to delete the student');
+                }
+            })
+            .then((data) => {
+                // Handle the successful response
+                studentDataDiv.innerText = data.success; // Display the success message
+            })
+            .catch((error) => {
+                // Handle any errors that occurred during the request
+                studentDataDiv.innerText = 'Error: ' + error.message;
+            });
+        });
+    </script>
+</body>
+</html>

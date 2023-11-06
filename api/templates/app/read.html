@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Read Student Data</title>
+    <style>
+        /* Style for the buttons */
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .create-button {
+            background-color: green;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .read-button {
+            background-color: yellow;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .update-button {
+            background-color: blue;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .delete-button {
+            background-color: red;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .home-button {
+            background-color: brown;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Read Student Data</h1>
+    <label for="studentId">Enter Student ID:</label>
+    <input type="text" id="studentId" />
+    <button id="getDataButton">Get Student Data</button>
+    <div id="studentData"></div>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <button class="create-button"><a href="{% url 'create' %}">Create Student</a></button>
+        <button class="read-button"><a href="{% url 'read' %}">Lookup Student</a></button>
+        <button class="update-button"><a href="{% url 'update' %}">Update Student</a></button>
+        <button class="delete-button"><a href="{% url 'delete' %}">Delete Student</a></button>
+
+    </div>
+        <div style="text-align: center; margin-top: 50px;">
+            <button class="home-button"><a href="{% url 'homepage' %}">visit Home</a></button>
+        </div>
+    <script>
+        function getStudentData() {
+            const studentId = document.querySelector('#studentId').value;
+            const apiURL = `http://localhost:8080/api/v1/students_data/?id=${studentId}`;
+    
+            fetch(apiURL)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    const studentData = JSON.stringify(data, null, 2);
+                    document.querySelector('#studentData').textContent = studentData;
+                })
+                .catch(function (error) {
+                    let errorMessage = error.message;
+                    document.querySelector('#studentData').textContent = errorMessage;
+                });
+        }
+    
+        document.querySelector('#getDataButton').addEventListener('click', getStudentData);
+    </script>
+</body>
+</html>
